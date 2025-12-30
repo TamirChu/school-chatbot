@@ -5,108 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>School AI Chatbot</title>
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #6366f1, #22c55e);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    .chatbot {
-      width: 360px;
-      background: #ffffff;
-      border-radius: 20px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    .header {
-      background: #4f46e5;
-      color: white;
-      padding: 15px;
-      text-align: center;
-      font-size: 18px;
-      font-weight: bold;
-    }
-
-    .messages {
-      flex: 1;
-      padding: 15px;
-      overflow-y: auto;
-      background: #f9fafb;
-    }
-
-    .bot, .user {
-      margin-bottom: 10px;
-      padding: 10px 14px;
-      border-radius: 15px;
-      max-width: 80%;
-      font-size: 14px;
-    }
-
-    .bot {
-      background: #e5e7eb;
-      align-self: flex-start;
-    }
-
-    .user {
-      background: #4f46e5;
-      color: white;
-      align-self: flex-end;
-    }
-
-    .input-area {
-      display: flex;
-      padding: 10px;
-      border-top: 1px solid #e5e7eb;
-      background: white;
-    }
-
-    .input-area input {
-      flex: 1;
-      padding: 10px;
-      border-radius: 10px;
-      border: 1px solid #d1d5db;
-      outline: none;
-    }
-
-    .input-area button {
-      margin-left: 8px;
-      padding: 10px 15px;
-      background: #22c55e;
-      border: none;
-      border-radius: 10px;
-      color: white;
-      cursor: pointer;
-    }
-	.school-logo {
-  width: 45px;
-  height: 45px;
-  object-fit: contain;
-  background: white;
-  border-radius: 50%;
-  padding: 5px;
-		.header {
-  background: #4f46e5;
-  color: white;
-  padding: 15px;
-  text-align: center;
-  font-size: 18px;
-  font-weight: bold;
-
-  /* New properties to make it sticky */
-  position: sticky;
-  top: 0;
-  z-index: 100;
+   body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #6366f1, #22c55e);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
-		.chatbot {
+
+.chatbot {
   width: 360px;
-  max-height: 600px; /* optional */
+  max-height: 600px;       /* Limit chatbot height */
   background: #ffffff;
   border-radius: 20px;
   box-shadow: 0 15px 40px rgba(0,0,0,0.2);
@@ -115,7 +26,92 @@
   overflow: hidden;
 }
 
+/* Header – stays at top */
+.header {
+  background: #4f46e5;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+
+  position: sticky;  /* Fix at top */
+  top: 0;
+  z-index: 100;
 }
+
+/* Messages – scrollable */
+.messages {
+  flex: 1;               /* Take available space */
+  padding: 15px;
+  overflow-y: auto;      /* Scroll only inside messages */
+  background: #f9fafb;
+}
+
+/* Chat bubbles */
+.bot, .user {
+  margin-bottom: 10px;
+  padding: 10px 14px;
+  border-radius: 15px;
+  max-width: 80%;
+  font-size: 14px;
+}
+
+.bot {
+  background: #e5e7eb;
+  align-self: flex-start;
+}
+
+.user {
+  background: #4f46e5;
+  color: white;
+  align-self: flex-end;
+}
+
+/* Input area – stays at bottom */
+.input-area {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #e5e7eb;
+  background: white;
+
+  position: sticky;  /* Fix at bottom */
+  bottom: 0;
+  z-index: 100;
+}
+
+.input-area input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  outline: none;
+}
+
+.input-area button {
+  margin-left: 8px;
+  padding: 10px 15px;
+  background: #22c55e;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+}
+
+/* Optional: Scrollbar styling for modern look */
+.messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.messages::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.2);
+  border-radius: 3px;
+}
+
+.messages::-webkit-scrollbar-track {
+  background: #f9fafb;
+}
+
 
   </style>
 </head>
