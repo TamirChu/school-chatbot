@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>School AI Chatbot</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #6366f1, #22c55e);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .chatbot {
+      width: 360px;
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .header {
+      background: #4f46e5;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .messages {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      background: #f9fafb;
+    }
+
+    .bot, .user {
+      margin-bottom: 10px;
+      padding: 10px 14px;
+      border-radius: 15px;
+      max-width: 80%;
+      font-size: 14px;
+    }
+
+    .bot {
+      background: #e5e7eb;
+      align-self: flex-start;
+    }
+
+    .user {
+      background: #4f46e5;
+      color: white;
+      align-self: flex-end;
+    }
+
+    .input-area {
+      display: flex;
+      padding: 10px;
+      border-top: 1px solid #e5e7eb;
+      background: white;
+    }
+
+    .input-area input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #d1d5db;
+      outline: none;
+    }
+
+    .input-area button {
+      margin-left: 8px;
+      padding: 10px 15px;
+      background: #22c55e;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      cursor: pointer;
+    }
+	.school-logo {
+  width: 45px;
+  height: 45px;
+  object-fit: contain;
+  background: white;
+  border-radius: 50%;
+  padding: 5px;
+}
+.header {
+  background: #4f46e5;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+
+  /* New properties to make it sticky */
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.chatbot {
+  width: 360px;
+  max-height: 600px; /* optional */
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+  </style>
+</head>
+<body>
+
+  <div class="chatbot">
+    <div class="header">
+  <div style="display:flex; align-items:center; gap:10px; justify-content:center;">
+   <!-- <div style="width:50px; height:40px; border-radius:50%; background:white; color:#4f46e5; display:flex; align-items:center; justify-content:center; font-weight:bold;">
+      L.H.S
+    </div>-->
+	<img src="logo.jpg" alt="Light House School Logo" class="school-logo">
+    <div>
+      <div style="font-size:18px;">Light house School</div>
+      <div style="font-size:12px; opacity:0.9;">"Every Child is Special"</div>
+    </div>
+  </div>
+</div>
+    <div class="messages" id="messages">
+      <div class="bot">Welcome to Light House School’s information chatbot. I can help with general information about the school.</div>
+    </div>
+    <div class="input-area">
+      <input type="text" id="userInput" placeholder="Type your question..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+ <script>
+  const messages = document.getElementById('messages');
+  const input = document.getElementById('userInput');
+
+  const responses = [
+    { keywords: ["school name", "name",], reply: "The school name is Light House School." },
+	{ keywords: ["hi", "hey","Hi", "Hey"], reply: "Hi, How can i help you?" },
+    { keywords: ["location", "located", "where"], reply: "Light House School is located in the city center and is easily accessible." },
+    { keywords: ["branch", "branches"], reply: "Yes, Light House School has two branches." },
+    { keywords: ["grades", "teach", "levels"], reply: "We teach students from Kindergarten up to Grade 8." },
+    { keywords: ["grade 8"], reply: "Yes, Grade 8 is available at Light House School." },
+    { keywords: ["private"], reply: "Light House School is a private school." },
+    { keywords: ["curriculum", "syllabus"], reply: "We follow the national curriculum with modern teaching methods." },
+    { keywords: ["library"], reply: "Yes, the school has a well-equipped library." },
+    { keywords: ["laboratory", "lab"], reply: "Yes, we have science laboratories for practical learning." },
+    { keywords: ["computer", "ict"], reply: "Yes, computer labs with internet access are available." },
+    { keywords: ["extra", "tutorial", "revision"], reply: "Yes, extra tutorial and revision classes are provided." },
+    { keywords: ["transport", "bus"], reply: "Yes, school bus transportation is available." },
+    { keywords: ["uniform"], reply: "Yes, all students are required to wear the school uniform." },
+    { keywords: ["contact", "phone", "email"], reply: "You can contact the school office during working hours." }
+  ];
+
+  function addMessage(text, sender) {
+    const div = document.createElement('div');
+    div.className = sender;
+    div.textContent = text;
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function getBotReply(userText) {
+    const lower = userText.toLowerCase();
+
+    for (const item of responses) {
+      if (item.keywords.some(keyword => lower.includes(keyword))) {
+        return item.reply;
+      }
+    }
+
+    return "Sorry, I don’t have information on that topic. Please contact the school office for official assistance.";
+  }
+
+  function sendMessage() {
+    const text = input.value.trim();
+    if (!text) return;
+
+    addMessage(text, 'user');
+    input.value = '';
+
+    setTimeout(() => {
+      const reply = getBotReply(text);
+      addMessage(reply, 'bot');
+    }, 400);
+  }
+
+  // Send message on Enter key
+  input.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+      sendMessage();
+    }
+  });
+</script>
+
+
+</body>
+</html>
