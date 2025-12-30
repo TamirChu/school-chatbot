@@ -92,7 +92,29 @@
   border-radius: 50%;
   padding: 5px;
 }
+.header {
+  background: #4f46e5;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
 
+  /* New properties to make it sticky */
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.chatbot {
+  width: 360px;
+  max-height: 600px; /* optional */
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
   </style>
 </head>
 <body>
@@ -100,13 +122,10 @@
   <div class="chatbot">
     <div class="header">
   <div style="display:flex; align-items:center; gap:10px; justify-content:center;">
-  
-    <!--<div style="width:50px; height:40px; border-radius:50%; background:white; color:#4f46e5; display:flex; align-items:center; justify-content:center; font-weight:bold;">
-     L.H.S
+   <!-- <div style="width:50px; height:40px; border-radius:50%; background:white; color:#4f46e5; display:flex; align-items:center; justify-content:center; font-weight:bold;">
+      L.H.S
     </div>-->
 	<img src="logo.jpg" alt="Light House School Logo" class="school-logo">
-
-    
     <div>
       <div style="font-size:18px;">Light house School</div>
       <div style="font-size:12px; opacity:0.9;">"Every Child is Special"</div>
@@ -121,69 +140,28 @@
       <button onclick="sendMessage()">Send</button>
     </div>
   </div>
-<script>
+
+ <script>
   const messages = document.getElementById('messages');
   const input = document.getElementById('userInput');
 
   const responses = [
-  {
-    keywords: ["school name", "name"],
-    reply: "You are chatting with Light House School’s official information chatbot."
-  },
-  {
-    keywords: ["location", "located", "where"],
-    reply: "Light House School is located within the city area and is easily accessible."
-  },
-  {
-    keywords: ["branch", "branches"],
-    reply: "Light House School operates more than one branch."
-  },
-  {
-    keywords: ["grades", "teach", "levels"],
-    reply: "The school offers classes from Kindergarten up to Grade 8."
-  },
-  {
-    keywords: ["grade 8"],
-    reply: "Classes are offered up to Grade 8 at Light House School."
-  },
-  {
-    keywords: ["private"],
-    reply: "Light House School is a private educational institution."
-  },
-  {
-    keywords: ["curriculum", "syllabus"],
-    reply: "The school follows the national curriculum supported by modern teaching approaches."
-  },
-  {
-    keywords: ["library"],
-    reply: "The school has a library that supports students’ reading and learning activities."
-  },
-  {
-    keywords: ["laboratory", "lab"],
-    reply: "Science laboratory facilities are available to support practical learning."
-  },
-  {
-    keywords: ["computer", "ict"],
-    reply: "ICT and computer laboratory facilities are available for students."
-  },
-  {
-    keywords: ["extra", "tutorial", "revision"],
-    reply: "Additional academic support activities may be provided as part of the school program."
-  },
-  {
-    keywords: ["transport", "bus"],
-    reply: "School transportation services may be available depending on location."
-  },
-  {
-    keywords: ["uniform"],
-    reply: "Students are expected to wear the official school uniform."
-  },
-  {
-    keywords: ["contact", "phone", "email"],
-    reply: "For contact details and official inquiries, please visit or contact the school office during working hours."
-  }
-];
-
+    { keywords: ["school name", "name",], reply: "The school name is Light House School." },
+	{ keywords: ["hi", "hey","Hi", "Hey"], reply: "Hi, How can i help you?" },
+    { keywords: ["location", "located", "where"], reply: "Light House School is located in the city center and is easily accessible." },
+    { keywords: ["branch", "branches"], reply: "Yes, Light House School has two branches." },
+    { keywords: ["grades", "teach", "levels"], reply: "We teach students from Kindergarten up to Grade 8." },
+    { keywords: ["grade 8"], reply: "Yes, Grade 8 is available at Light House School." },
+    { keywords: ["private"], reply: "Light House School is a private school." },
+    { keywords: ["curriculum", "syllabus"], reply: "We follow the national curriculum with modern teaching methods." },
+    { keywords: ["library"], reply: "Yes, the school has a well-equipped library." },
+    { keywords: ["laboratory", "lab"], reply: "Yes, we have science laboratories for practical learning." },
+    { keywords: ["computer", "ict"], reply: "Yes, computer labs with internet access are available." },
+    { keywords: ["extra", "tutorial", "revision"], reply: "Yes, extra tutorial and revision classes are provided." },
+    { keywords: ["transport", "bus"], reply: "Yes, school bus transportation is available." },
+    { keywords: ["uniform"], reply: "Yes, all students are required to wear the school uniform." },
+    { keywords: ["contact", "phone", "email"], reply: "You can contact the school office during working hours." }
+  ];
 
   function addMessage(text, sender) {
     const div = document.createElement('div');
@@ -202,7 +180,7 @@
       }
     }
 
-    return "I’m sorry, I don’t have information on that topic. Please contact the school office for official assistance.";
+    return "Sorry, I don’t have information about that yet. Please contact the school office for more details.";
   }
 
   function sendMessage() {
@@ -226,6 +204,6 @@
   });
 </script>
 
- 
+
 </body>
 </html>
