@@ -5,205 +5,184 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>School AI Chatbot</title>
   <style>
-   body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #6366f1, #22c55e);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
+    /* Body and background */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #6366f1, #22c55e);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
 
-.chatbot {
-  width: 360px;
-  max-height: 600px;       /* Limit chatbot height */
-  background: #ffffff;
-  border-radius: 20px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
+    /* Chatbot container */
+    .chatbot {
+      width: 360px;
+      max-width: 90%;
+      height: 600px;
+      display: flex;
+      flex-direction: column;
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    }
 
-/* Header – stays at top */
-.header {
-  background: #4f46e5;
-  color: white;
-  padding: 15px;
-  text-align: center;
-  font-size: 18px;
-  font-weight: bold;
+    /* Header – sticky at top */
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 15px;
+      background: #4f46e5;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
 
-  position: sticky;  /* Fix at top */
-  top: 0;
-  z-index: 100;
-}
+    .header img {
+      width: 45px;
+      height: 45px;
+      object-fit: contain;
+      border-radius: 50%;
+      background: white;
+      padding: 5px;
+    }
 
-/* Messages – scrollable */
-.messages {
-  flex: 1;               /* Take available space */
-  padding: 15px;
-  overflow-y: auto;      /* Scroll only inside messages */
-  background: #f9fafb;
-}
+    .header-text {
+      display: flex;
+      flex-direction: column;
+    }
 
-/* Chat bubbles */
-.bot, .user {
-  margin-bottom: 10px;
-  padding: 10px 14px;
-  border-radius: 15px;
-  max-width: 80%;
-  font-size: 14px;
-}
+    .header-text div:nth-child(2) {
+      font-size: 12px;
+      opacity: 0.9;
+    }
 
-.bot {
-  background: #e5e7eb;
-  align-self: flex-start;
-}
+    /* Messages – scrollable area */
+    .messages {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      background: #f9fafb;
+      display: flex;
+      flex-direction: column;
+    }
 
-.user {
-  background: #4f46e5;
-  color: white;
-  align-self: flex-end;
-}
+    /* Chat bubbles */
+    .bot, .user {
+      margin-bottom: 10px;
+      padding: 10px 14px;
+      border-radius: 15px;
+      max-width: 80%;
+      font-size: 14px;
+      word-wrap: break-word;
+    }
 
-/* Input area – stays at bottom */
-.input-area {
-  display: flex;
-  padding: 10px;
-  border-top: 1px solid #e5e7eb;
-  background: white;
+    .bot {
+      background: #e5e7eb;
+      align-self: flex-start;
+    }
 
-  position: sticky;  /* Fix at bottom */
-  bottom: 0;
-  z-index: 100;
-}
+    .user {
+      background: #4f46e5;
+      color: white;
+      align-self: flex-end;
+    }
 
-.input-area input {
-  flex: 1;
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid #d1d5db;
-  outline: none;
-}
+    /* Input area – sticky at bottom */
+    .input-area {
+      display: flex;
+      padding: 10px;
+      border-top: 1px solid #e5e7eb;
+      background: white;
+      flex-shrink: 0;
+    }
 
-.input-area button {
-  margin-left: 8px;
-  padding: 10px 15px;
-  background: #22c55e;
-  border: none;
-  border-radius: 10px;
-  color: white;
-  cursor: pointer;
-}
+    .input-area input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #d1d5db;
+      outline: none;
+    }
 
-/* Optional: Scrollbar styling for modern look */
-.messages::-webkit-scrollbar {
-  width: 6px;
-}
+    .input-area button {
+      margin-left: 8px;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 10px;
+      background: #22c55e;
+      color: white;
+      cursor: pointer;
+    }
 
-.messages::-webkit-scrollbar-thumb {
-  background-color: rgba(0,0,0,0.2);
-  border-radius: 3px;
-}
+    /* Scrollbar styling */
+    .messages::-webkit-scrollbar {
+      width: 6px;
+    }
 
-.messages::-webkit-scrollbar-track {
-  background: #f9fafb;
-}
+    .messages::-webkit-scrollbar-thumb {
+      background-color: rgba(0,0,0,0.2);
+      border-radius: 3px;
+    }
 
+    .messages::-webkit-scrollbar-track {
+      background: #f9fafb;
+    }
 
+    /* Mobile responsiveness */
+    @media (max-width: 400px) {
+      .chatbot {
+        width: 95%;
+        height: 80vh;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <div class="chatbot">
-    <div class="header">
-  <div style="display:flex; align-items:center; gap:10px; justify-content:center;">
-  
-    <!--<div style="width:50px; height:40px; border-radius:50%; background:white; color:#4f46e5; display:flex; align-items:center; justify-content:center; font-weight:bold;">
-     L.H.S
-    </div>-->
-	<img src="logo.jpg" alt="Light House School Logo" class="school-logo">
-
-    
-    <div>
-      <div style="font-size:18px;">Light house School</div>
-      <div style="font-size:12px; opacity:0.9;">"Every Child is Special"</div>
+<div class="chatbot">
+  <!-- Header -->
+  <div class="header">
+    <img src="logo.jpg" alt="Light House School Logo">
+    <div class="header-text">
+      <div>Light House School</div>
+      <div>"Every Child is Special"</div>
     </div>
+  </div>
+
+  <!-- Messages -->
+  <div class="messages" id="messages">
+    <div class="bot">Welcome to Light House School’s chatbot! I can answer general school questions.</div>
+  </div>
+
+  <!-- Input -->
+  <div class="input-area">
+    <input type="text" id="userInput" placeholder="Type your question..." />
+    <button onclick="sendMessage()">Send</button>
   </div>
 </div>
-    <div class="messages" id="messages">
-      <div class="bot">Welcome to Light House School’s information chatbot. I can help with general information about the school.</div>
-    </div>
-    <div class="input-area">
-      <input type="text" id="userInput" placeholder="Type your question..." />
-      <button onclick="sendMessage()">Send</button>
-    </div>
-  </div>
+
 <script>
   const messages = document.getElementById('messages');
   const input = document.getElementById('userInput');
 
   const responses = [
-  {
-    keywords: ["school name", "name"],
-    reply: "You are chatting with Light House School’s official information chatbot."
-  },
-  {
-    keywords: ["location", "located", "where"],
-    reply: "Light House School is located within the city area and is easily accessible."
-  },
-  {
-    keywords: ["branch", "branches"],
-    reply: "Light House School operates more than one branch."
-  },
-  {
-    keywords: ["grades", "teach", "levels"],
-    reply: "The school offers classes from Kindergarten up to Grade 8."
-  },
-  {
-    keywords: ["grade 8"],
-    reply: "Classes are offered up to Grade 8 at Light House School."
-  },
-  {
-    keywords: ["private"],
-    reply: "Light House School is a private educational institution."
-  },
-  {
-    keywords: ["curriculum", "syllabus"],
-    reply: "The school follows the national curriculum supported by modern teaching approaches."
-  },
-  {
-    keywords: ["library"],
-    reply: "The school has a library that supports students’ reading and learning activities."
-  },
-  {
-    keywords: ["laboratory", "lab"],
-    reply: "Science laboratory facilities are available to support practical learning."
-  },
-  {
-    keywords: ["computer", "ict"],
-    reply: "ICT and computer laboratory facilities are available for students."
-  },
-  {
-    keywords: ["extra", "tutorial", "revision"],
-    reply: "Additional academic support activities may be provided as part of the school program."
-  },
-  {
-    keywords: ["transport", "bus"],
-    reply: "School transportation services may be available depending on location."
-  },
-  {
-    keywords: ["uniform"],
-    reply: "Students are expected to wear the official school uniform."
-  },
-  {
-    keywords: ["contact", "phone", "email"],
-    reply: "For contact details and official inquiries, please visit or contact the school office during working hours."
-  }
-];
-
+    { keywords: ["location", "where", "address"], reply: "Light House School is located in the city center." },
+    { keywords: ["grades", "levels", "teach"], reply: "We teach from Kindergarten up to Grade 8." },
+    { keywords: ["branch", "branches"], reply: "Light House School operates more than one branch." },
+    { keywords: ["curriculum", "syllabus"], reply: "The school follows the national curriculum with modern teaching methods." },
+    { keywords: ["library"], reply: "We have a well-equipped library." },
+    { keywords: ["laboratory", "lab"], reply: "Science labs are available for practical learning." },
+    { keywords: ["computer", "ict"], reply: "ICT and computer labs are available." },
+    { keywords: ["transport", "bus"], reply: "School bus transport is available." },
+    { keywords: ["uniform"], reply: "Students must wear the official school uniform." },
+    { keywords: ["contact", "phone", "email"], reply: "Please contact the school office for official inquiries." }
+  ];
 
   function addMessage(text, sender) {
     const div = document.createElement('div');
@@ -215,37 +194,22 @@
 
   function getBotReply(userText) {
     const lower = userText.toLowerCase();
-
     for (const item of responses) {
-      if (item.keywords.some(keyword => lower.includes(keyword))) {
-        return item.reply;
-      }
+      if (item.keywords.some(k => lower.includes(k))) return item.reply;
     }
-
-    return "I’m sorry, I don’t have information on that topic. Please contact the school office for official assistance.";
+    return "I’m sorry, I don’t have information on that. Please contact the school office.";
   }
 
   function sendMessage() {
     const text = input.value.trim();
     if (!text) return;
-
     addMessage(text, 'user');
     input.value = '';
-
-    setTimeout(() => {
-      const reply = getBotReply(text);
-      addMessage(reply, 'bot');
-    }, 400);
+    setTimeout(() => addMessage(getBotReply(text), 'bot'), 300);
   }
 
-  // Send message on Enter key
-  input.addEventListener("keydown", function (e) {
-    if (e.key === "Enter") {
-      sendMessage();
-    }
-  });
+  input.addEventListener("keydown", e => { if (e.key === "Enter") sendMessage(); });
 </script>
 
- 
 </body>
 </html>
