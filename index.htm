@@ -17,7 +17,6 @@
 
     .chatbot {
       width: 360px;
-      max-height: 600px;
       background: #ffffff;
       border-radius: 20px;
       box-shadow: 0 15px 40px rgba(0,0,0,0.2);
@@ -33,30 +32,6 @@
       text-align: center;
       font-size: 18px;
       font-weight: bold;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      justify-content: center;
-
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .school-logo {
-      width: 45px;
-      height: 45px;
-      object-fit: contain;
-      background: white;
-      border-radius: 50%;
-      padding: 5px;
-    }
-
-    .header-text {
-      display: flex;
-      flex-direction: column;
-      font-size: 14px;
-      text-align: left;
     }
 
     .messages {
@@ -90,10 +65,6 @@
       padding: 10px;
       border-top: 1px solid #e5e7eb;
       background: white;
-
-      position: sticky;
-      bottom: 0;
-      z-index: 100;
     }
 
     .input-area input {
@@ -113,100 +84,148 @@
       color: white;
       cursor: pointer;
     }
+	.school-logo {
+  width: 45px;
+  height: 45px;
+  object-fit: contain;
+  background: white;
+  border-radius: 50%;
+  padding: 5px;
+}
 
-    /* Optional: Modern scrollbar */
-    .messages::-webkit-scrollbar {
-      width: 6px;
-    }
-    .messages::-webkit-scrollbar-thumb {
-      background-color: rgba(0,0,0,0.2);
-      border-radius: 3px;
-    }
-    .messages::-webkit-scrollbar-track {
-      background: #f9fafb;
-    }
   </style>
 </head>
 <body>
 
   <div class="chatbot">
     <div class="header">
-      <img src="logo.png" alt="Light House School Logo" class="school-logo">
-      <div class="header-text">
-        <div>Light House School</div>
-        <div style="font-size:12px; opacity:0.9;">Quality Education for the Future</div>
-      </div>
-    </div>
+  <div style="display:flex; align-items:center; gap:10px; justify-content:center;">
+  
+    <!--<div style="width:50px; height:40px; border-radius:50%; background:white; color:#4f46e5; display:flex; align-items:center; justify-content:center; font-weight:bold;">
+     L.H.S
+    </div>-->
+	<img src="logo.jpg" alt="Light House School Logo" class="school-logo">
 
+    
+    <div>
+      <div style="font-size:18px;">Light house School</div>
+      <div style="font-size:12px; opacity:0.9;">"Every Child is Special"</div>
+    </div>
+  </div>
+</div>
     <div class="messages" id="messages">
-      <div class="bot">Welcome! I am the Light House School information chatbot. Ask me anything about the school. For official updates, contact the school office.</div>
+      <div class="bot">Welcome to Light House School’s information chatbot. I can help with general information about the school.</div>
     </div>
-
     <div class="input-area">
       <input type="text" id="userInput" placeholder="Type your question..." />
       <button onclick="sendMessage()">Send</button>
     </div>
   </div>
+<script>
+  const messages = document.getElementById('messages');
+  const input = document.getElementById('userInput');
 
-  <script>
-    const messages = document.getElementById('messages');
-    const input = document.getElementById('userInput');
+  const responses = [
+  {
+    keywords: ["school name", "name"],
+    reply: "You are chatting with Light House School’s official information chatbot."
+  },
+  {
+    keywords: ["location", "located", "where"],
+    reply: "Light House School is located within the city area and is easily accessible."
+  },
+  {
+    keywords: ["branch", "branches"],
+    reply: "Light House School operates more than one branch."
+  },
+  {
+    keywords: ["grades", "teach", "levels"],
+    reply: "The school offers classes from Kindergarten up to Grade 8."
+  },
+  {
+    keywords: ["grade 8"],
+    reply: "Classes are offered up to Grade 8 at Light House School."
+  },
+  {
+    keywords: ["private"],
+    reply: "Light House School is a private educational institution."
+  },
+  {
+    keywords: ["curriculum", "syllabus"],
+    reply: "The school follows the national curriculum supported by modern teaching approaches."
+  },
+  {
+    keywords: ["library"],
+    reply: "The school has a library that supports students’ reading and learning activities."
+  },
+  {
+    keywords: ["laboratory", "lab"],
+    reply: "Science laboratory facilities are available to support practical learning."
+  },
+  {
+    keywords: ["computer", "ict"],
+    reply: "ICT and computer laboratory facilities are available for students."
+  },
+  {
+    keywords: ["extra", "tutorial", "revision"],
+    reply: "Additional academic support activities may be provided as part of the school program."
+  },
+  {
+    keywords: ["transport", "bus"],
+    reply: "School transportation services may be available depending on location."
+  },
+  {
+    keywords: ["uniform"],
+    reply: "Students are expected to wear the official school uniform."
+  },
+  {
+    keywords: ["contact", "phone", "email"],
+    reply: "For contact details and official inquiries, please visit or contact the school office during working hours."
+  }
+];
 
-    const responses = [
-      { keywords: ["school name", "name"], reply: "You are chatting with Light House School’s official information chatbot." },
-      { keywords: ["location", "located", "where"], reply: "Light House School is located within the city area and is easily accessible." },
-      { keywords: ["branch", "branches"], reply: "Light House School operates more than one branch." },
-      { keywords: ["grades", "teach", "levels"], reply: "The school offers classes from Kindergarten up to Grade 8." },
-      { keywords: ["grade 8"], reply: "Classes are offered up to Grade 8 at Light House School." },
-      { keywords: ["private"], reply: "Light House School is a private educational institution." },
-      { keywords: ["curriculum", "syllabus"], reply: "The school follows the national curriculum supported by modern teaching approaches." },
-      { keywords: ["library"], reply: "The school has a library that supports students’ reading and learning activities." },
-      { keywords: ["laboratory", "lab"], reply: "Science laboratory facilities are available to support practical learning." },
-      { keywords: ["computer", "ict"], reply: "ICT and computer laboratory facilities are available for students." },
-      { keywords: ["extra", "tutorial", "revision"], reply: "Additional academic support activities may be provided as part of the school program." },
-      { keywords: ["transport", "bus"], reply: "School transportation services may be available depending on location." },
-      { keywords: ["uniform"], reply: "Students are expected to wear the official school uniform." },
-      { keywords: ["contact", "phone", "email"], reply: "For official inquiries, please contact the school office using the school’s published phone number or email." }
-    ];
 
-    function addMessage(text, sender) {
-      const div = document.createElement('div');
-      div.className = sender;
-      div.textContent = text;
-      messages.appendChild(div);
-      messages.scrollTop = messages.scrollHeight;
-    }
+  function addMessage(text, sender) {
+    const div = document.createElement('div');
+    div.className = sender;
+    div.textContent = text;
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+  }
 
-    function getBotReply(userText) {
-      const lower = userText.toLowerCase();
-      for (const item of responses) {
-        if (item.keywords.some(keyword => lower.includes(keyword))) {
-          return item.reply;
-        }
+  function getBotReply(userText) {
+    const lower = userText.toLowerCase();
+
+    for (const item of responses) {
+      if (item.keywords.some(keyword => lower.includes(keyword))) {
+        return item.reply;
       }
-      return "I’m sorry, I don’t have information on that topic. Please contact the school office for official assistance.";
     }
 
-    function sendMessage() {
-      const text = input.value.trim();
-      if (!text) return;
+    return "I’m sorry, I don’t have information on that topic. Please contact the school office for official assistance.";
+  }
 
-      addMessage(text, 'user');
-      input.value = '';
+  function sendMessage() {
+    const text = input.value.trim();
+    if (!text) return;
 
-      setTimeout(() => {
-        const reply = getBotReply(text);
-        addMessage(reply, 'bot');
-      }, 400);
+    addMessage(text, 'user');
+    input.value = '';
+
+    setTimeout(() => {
+      const reply = getBotReply(text);
+      addMessage(reply, 'bot');
+    }, 400);
+  }
+
+  // Send message on Enter key
+  input.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+      sendMessage();
     }
+  });
+</script>
 
-    // Send message with Enter key
-    input.addEventListener("keydown", function (e) {
-      if (e.key === "Enter") {
-        sendMessage();
-      }
-    });
-  </script>
-
+ 
 </body>
 </html>
